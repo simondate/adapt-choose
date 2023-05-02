@@ -15,6 +15,7 @@ export default function Choose(props) {
     body,
     instruction,
     onKeyPress,
+    onItemFocus,
     onItemOptionSelect,
     _isCorrectAnswerShown,
     isInteractive
@@ -78,7 +79,29 @@ export default function Choose(props) {
                   ])}
                   key={option._index}
                 >
+                  <input
+                    className="choose__item-input"
+                    type='radio'
+                    name={`choices-${_id}-${_index}`}
+                    id={`input-${_id}-${_index}-${option._index}`}
+                    value={option._index}
+                    disabled={!_isEnabled}
+                    aria-label={
+                      !shouldShowMarking
+                        ? `${
+                          _isCorrect
+                            ? ariaLabels.correct
+                            : ariaLabels.incorrect
+                        }, ${Adapt.a11y.normalize(text)}`
+                        : `${Adapt.a11y.normalize(text)}`
+                    }
+                    data-adapt-index={_index}
+                    onKeyPress={onKeyPress}
+                    onChange={onItemOptionSelect}
+                    onFocus={onItemFocus}
+                  />
                   <label
+                    className="choose__item-label"
                     aria-hidden={true}
                     htmlFor={`input-${_id}-${_index}-${option._index}`}
                     data-adapt-index={_index}
@@ -97,25 +120,6 @@ export default function Choose(props) {
                       <div className='icon'></div>
                     </div>
                   </label>
-                  <input
-                    type='radio'
-                    name={`choices-${_id}-${_index}`}
-                    id={`input-${_id}-${_index}-${option._index}`}
-                    value={option._index}
-                    disabled={!_isEnabled}
-                    aria-label={
-                      !shouldShowMarking
-                        ? `${
-                          _isCorrect
-                            ? ariaLabels.correct
-                            : ariaLabels.incorrect
-                        }, ${Adapt.a11y.normalize(text)}`
-                        : `${Adapt.a11y.normalize(text)}`
-                    }
-                    data-adapt-index={_index}
-                    onKeyPress={onKeyPress}
-                    onChange={onItemOptionSelect}
-                  />
                 </div>
               ))}
             </div>

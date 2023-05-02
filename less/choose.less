@@ -11,19 +11,19 @@
   }
 
   &__item-choice {
-    background-color: @black;
-    color: @white;
-    margin-right: 1rem;
     label {
       display: block;
       padding: 0.5rem;
+      background-color: @black;
+      color: @white;
+      margin-right: 1rem;
     }
     input {
       opacity: 0;
       position: absolute;
     }
 
-    &.is-selected {
+    &.is-selected label {
       background-color: @white;
       color: @black;
     }
@@ -54,7 +54,7 @@
     }
     .choose__item.is-incorrect {
       .choose__item-choice {
-        &.is-selected {
+        &.is-selected label {
           background-color: @validation-error;
           color: @white;
         }
@@ -62,7 +62,7 @@
     }
     .choose__item.is-correct {
       .choose__item-choice {
-        &.is-selected {
+        &.is-selected label {
           background-color: @validation-success;
           color: @white;
         }
@@ -71,11 +71,11 @@
   }
   &__widget.show-correct-answer {
     .choose__item-choice {
-      &.is-selected {
+      &.is-selected label {
         background-color: @black;
         color: @white;
       }
-      &.is-correct {
+      &.is-correct label {
         background-color: @validation-success;
         color: @white;
       }
@@ -93,4 +93,19 @@
       cursor: pointer;
     }
   }
+
 }
+
+.no-touch &__item-label:not(.is-disabled):not(.is-selected):hover .gmcq-item__option,
+html:not(.a11y-disable-focusoutline) .gmcq__item-input:focus + &-item__label {
+   .icon {
+     color: @item-color;
+   }
+   .transition(background-color @duration ease-in, color @duration ease-in;);
+}
+
+.choose__item-input:focus-visible + .choose__item-label {
+  outline: 2px solid @item-color;
+
+}
+
