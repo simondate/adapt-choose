@@ -52,6 +52,13 @@
     .choose__item-state {
       display: block;
     }
+
+    .is-incorrect, .is-correct {
+      .choose__item-choice label {
+        pointer-events: none;
+      }
+    }
+
     .choose__item.is-incorrect {
       .choose__item-choice {
         &.is-selected label {
