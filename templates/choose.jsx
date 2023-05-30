@@ -1,5 +1,6 @@
 import Adapt from 'core/js/adapt';
 import React from 'react';
+import a11y from 'core/js/a11y';
 import { templates, classes, html, compile } from 'core/js/reactHelpers';
 
 export default function Choose(props) {
@@ -10,7 +11,8 @@ export default function Choose(props) {
     _isEnabled,
     _isInteractionComplete,
     _isCorrect,
-    _canShowMarking,
+    _isActive,
+    _shouldShowMarking,
     displayTitle,
     body,
     instruction,
@@ -18,10 +20,7 @@ export default function Choose(props) {
     onItemFocus,
     onItemOptionSelect,
     _isCorrectAnswerShown,
-    isInteractive
   } = props;
-
-  const shouldShowMarking = isInteractive() && _canShowMarking;
 
   return (
     <div className='component__inner choose__inner'>
@@ -86,15 +85,9 @@ export default function Choose(props) {
                     id={`input-${_id}-${_index}-${option._index}`}
                     value={option._index}
                     disabled={!_isEnabled}
-                    aria-label={
-                      !shouldShowMarking
-                        ? `${
-                          _isCorrect
-                            ? ariaLabels.correct
-                            : ariaLabels.incorrect
-                        }, ${Adapt.a11y.normalize(text)}`
-                        : `${Adapt.a11y.normalize(text)}`
-                    }
+                    aria-label={!_shouldShowMarking ?
+                      a11y.normalize(option.text) :
+                      `${option._isCorrect ? ariaLabels.correct : ariaLabels.incorrect}, ${option._isSelected ? ariaLabels.selectedAnswer : ariaLabels.unselectedAnswer}. ${a11y.normalize(option.text)}`}
                     data-adapt-index={_index}
                     onKeyPress={onKeyPress}
                     onChange={onItemOptionSelect}
